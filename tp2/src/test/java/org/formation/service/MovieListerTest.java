@@ -16,9 +16,20 @@ public class MovieListerTest {
 	@Test
 	public void testDirectedByWithFile() {
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+		context.getEnvironment().setActiveProfiles("file");
 		context.register(MovieApplicationConfiguration.class);
 		context.refresh();
 
+		performTest(context);
+
+	}
+
+	@Test
+	public void testDirectedByWithJdbc() {
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+		context.getEnvironment().setActiveProfiles("jdbc");
+		context.register(MovieApplicationConfiguration.class);
+		context.refresh();
 		performTest(context);
 
 	}
