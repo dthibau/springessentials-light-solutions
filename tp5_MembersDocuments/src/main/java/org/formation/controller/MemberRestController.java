@@ -3,12 +3,13 @@ package org.formation.controller;
 import java.util.List;
 import java.util.Optional;
 
+
 import org.formation.controller.views.MemberViews;
 import org.formation.model.Member;
 import org.formation.model.MemberRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("/api/members")
@@ -46,6 +48,7 @@ public class MemberRestController {
 	}
 	
 
+
 	@GetMapping("/{id}")
 	@JsonView(MemberViews.Detail.class)
 	public Member getById(@PathVariable long id) throws MemberNotFoundException {
@@ -57,7 +60,6 @@ public class MemberRestController {
 	@PostMapping()
 	@JsonView(MemberViews.Detail.class)
 	public ResponseEntity<Member> create(@Valid @RequestBody Member member) {
-
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(memberRepository.save(member));
 

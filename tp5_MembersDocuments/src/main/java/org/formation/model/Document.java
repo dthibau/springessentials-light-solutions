@@ -16,6 +16,7 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
+
 @Entity
 public class Document implements Serializable {
 

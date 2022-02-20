@@ -2,6 +2,8 @@ package org.formation.controller;
 
 import java.util.List;
 
+
+
 import org.formation.model.Document;
 import org.formation.model.DocumentRepository;
 import org.formation.model.Member;
@@ -27,6 +29,7 @@ public class DocumentRestController {
 	public DocumentRestController(DocumentRepository documentRepository, MemberRepository memberRepository) {
 		this.documentRepository = documentRepository;
 		this.memberRepository = memberRepository;
+
 	}
 
 	/**
@@ -34,7 +37,7 @@ public class DocumentRestController {
 	 * @return
 	 * @throws MemberNotFoundException 
 	 */
-	@GetMapping
+	@GetMapping("/owner/{id}/")
 	public List<Document> getDocuments(@PathVariable("id") Long id) throws MemberNotFoundException {
 
 		Member member = memberRepository.findById(id).orElseThrow(
