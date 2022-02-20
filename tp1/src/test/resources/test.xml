@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="movieDao" class="org.formation.dao.FileDAO">
+		<property name="file" value="/movie.txt" />
+	</bean>
+
+	<bean id="movieLister" class="org.formation.service.MovieLister">
+		<property name="movieDao" ref="movieDao" />
+	</bean>
+
+</beans>
