@@ -15,6 +15,7 @@ public class MemberService {
 	
 	public void importDocument(Document doc) {
 		
+
 		memberRepository.findAll().stream().forEach(m -> {
 			m.addDocument(doc);
 			memberRepository.save(m);

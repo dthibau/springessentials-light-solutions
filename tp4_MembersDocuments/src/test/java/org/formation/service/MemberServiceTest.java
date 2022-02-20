@@ -11,8 +11,9 @@ import org.formation.model.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootTest
+@SpringBootTest(properties = { "spring.jpa.properties.hibernate.hbm2ddl.import_files=" })
 public class MemberServiceTest {
 
 	@Autowired
