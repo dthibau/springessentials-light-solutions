@@ -1,0 +1,25 @@
+spring:
+  jpa:
+    show-sql: true  
+    open-in-view: false
+    
+    
+logging:
+  level:
+    '[org.springframework.security]': debug
+--- 
+spring:
+  config:
+    activate:
+      on-profile:
+      - prod
+      
+  datasource:
+    url: jdbc:postgresql:members_documents
+    username: postgres
+    password: postgres
+    
+    
+  jpa:
+    hibernate:
+      ddl-auto: update
