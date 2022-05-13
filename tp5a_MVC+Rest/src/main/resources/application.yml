@@ -1,0 +1,8 @@
+spring:
+  jpa:
+    show-sql: false
+    open-in-view: false
+
+  mongodb:
+    embedded:
+      version: 3.4.5 
