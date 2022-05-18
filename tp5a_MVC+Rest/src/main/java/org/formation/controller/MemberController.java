@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/web")
+@SessionAttributes("loggedUser")
 public class MemberController {
 
 	@Autowired
@@ -36,8 +38,9 @@ public class MemberController {
 			model.addAttribute("member", member);
 			return "register";
 		}
-		redirectAttributes.addFlashAttribute("congrats", "Congratulations, you can use our servie now");
-		memberRepository.save(member);
+		redirectAttributes.addFlashAttribute("congrats", "Congratulations, you can use our service now");
+
+		model.addAttribute("loggedUser", memberRepository.save(member));
 		return "redirect:/documents";
 		
 	}

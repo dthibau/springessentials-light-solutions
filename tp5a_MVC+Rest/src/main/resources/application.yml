@@ -6,3 +6,49 @@ spring:
   mongodb:
     embedded:
       version: 3.4.5 
+      
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: 8d1a377eaaabf0c9c7e1
+            client-secret: 68933512b9de0124e4dd80fd56266d3748fe9e4a  
+
+logging:
+  level:
+    '[org.springframework.security]': debug
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - '*'
+  endpoint:
+    health:
+      show-details: always
+      
+      
+---
+spring:
+  config:
+    activate:
+      on-profile:
+      - prod
+      
+  datasource:
+    url: jdbc:postgresql:members_documents
+    username: postgres
+    password: postgres
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - health
+        - info    
+
+    
+  

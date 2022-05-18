@@ -4,11 +4,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.formation.model.Document;
 import org.formation.model.Member;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 
-@SpringBootTest
+@DataJpaTest
 class MemberRepositoryTest {
 
 	@Autowired
@@ -16,6 +20,30 @@ class MemberRepositoryTest {
 	
 	@Autowired
 	DocumentRepository documentRepository;
+	
+	@Autowired
+	ApplicationContext context;
+	
+	@Autowired
+	TestEntityManager testEntityManager;
+	
+	
+	@BeforeEach
+	public void displayBeans() {
+		
+		for ( String bName : context.getBeanDefinitionNames() ) {
+			System.out.println("Beans : " + bName);
+		}
+	}
+	
+	@Test 
+	void testFindByName() {
+		Member m = Member.builder().email("d@gmail.com").nom("ABCCD").password("secret").build();
+				
+		testEntityManager.persist(m);
+		
+//		assertEquals(1, memberRepository.findByNomOrPrenomContainingAllIgnoreCase("CC").size());
+	}
 	
 	@Test
 	void testCascading() {
