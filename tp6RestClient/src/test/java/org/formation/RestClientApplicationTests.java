@@ -1,9 +1,5 @@
 package org.formation;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 import org.formation.model.User;
 import org.junit.jupiter.api.BeforeEach;
