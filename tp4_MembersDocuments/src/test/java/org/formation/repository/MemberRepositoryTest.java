@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
@@ -46,7 +47,19 @@ class MemberRepositoryTest {
 
 		assertTrue(!notFound.isPresent());
 	}
+	
+	@Test
+	void testByFirstOrLastName() {
 
+		List<Member> result = memberRepository.findByNomContainsOrPrenomContainsAllIgnoreCase("da","da");
+
+		assertEquals(1,result.size());
+
+		result = memberRepository.findByNomContainsOrPrenomContainsAllIgnoreCase("t","t");
+
+		assertEquals(6,result.size());
+	}
+	
 	@Test
 	void testingCascading() {
 		long initialMemberCount = memberRepository.count();
