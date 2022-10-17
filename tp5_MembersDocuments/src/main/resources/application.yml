@@ -2,7 +2,10 @@ spring:
   jpa:
     show-sql: true
     open-in-view: false    
-    
+
+logging:
+  level:
+    '[org.springframework.security]': debug    
 --- 
 spring:
   config:
