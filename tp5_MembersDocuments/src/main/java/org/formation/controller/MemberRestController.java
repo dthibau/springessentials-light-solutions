@@ -55,7 +55,8 @@ public class MemberRestController {
 	}
 		
 	@PostMapping()
-	public ResponseEntity<Member> create(@Valid Member member) {
+	@JsonView(MemberViews.Detail.class)
+	public ResponseEntity<Member> create(@Valid @RequestBody Member member) {
 
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(memberRepository.save(member));

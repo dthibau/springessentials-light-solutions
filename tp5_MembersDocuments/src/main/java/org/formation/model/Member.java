@@ -38,6 +38,7 @@ public class Member {
 	
 	@Column(unique=true)
 	@JsonView(MemberViews.List.class)
+	@NotNull
 	private String email;
 	
 	@NotNull
