@@ -11,6 +11,11 @@ public class MovieLister {
 
 	private MovieDAO movieDao;
 
+	public MovieLister(MovieDAO movieDao) {
+		// TODO Auto-generated constructor stub
+		this.movieDao = movieDao;
+	}
+	
 	public void setMovieDao(MovieDAO movieDao) {
 		this.movieDao = movieDao;
 	}

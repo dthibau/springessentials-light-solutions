@@ -8,7 +8,8 @@
 	</bean>
 
 	<bean id="movieLister" class="org.formation.service.MovieLister">
-		<property name="movieDao" ref="movieDao" />
+		<constructor-arg ref="movieDao"></constructor-arg>
+<!-- 		<property name="movieDao" ref="movieDao" /> -->
 	</bean>
 
 </beans>

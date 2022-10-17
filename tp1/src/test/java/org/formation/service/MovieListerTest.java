@@ -15,8 +15,8 @@ public class MovieListerTest {
 
 	@Test
 	public void testDirectedBy() {
-		ApplicationContext context = new ClassPathXmlApplicationContext("test.xml");
-		
+
+		ApplicationContext context = new ClassPathXmlApplicationContext("test.xml");		
 
 		MovieLister movieLister =
 			(MovieLister) context.getBean("movieLister");
@@ -24,12 +24,11 @@ public class MovieListerTest {
 	
 		List<Movie> hitchcock = movieLister.moviesDirectedBy("Hitchcock");
 		List<Movie> HITCHCOCK = movieLister.moviesDirectedBy("HITCHCOCK");
-		assertEquals(hitchcock.size(), 2);
-		assertEquals(HITCHCOCK.size(), 2);
+		assertEquals(2, hitchcock.size());
+		assertEquals(2, HITCHCOCK.size());
 		List<Movie> empty = movieLister.moviesDirectedBy("");
 		assertNotNull(empty);
 		assertEquals(0, empty.size());
-		
-		
+
 	}
 }
