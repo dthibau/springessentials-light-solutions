@@ -9,7 +9,11 @@ import org.formation.model.Member;
 import org.formation.model.MemberRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+<<<<<<< HEAD
 
+=======
+import org.springframework.security.crypto.password.PasswordEncoder;
+>>>>>>> aa6c6c0 (6.3 auth custom + BCrypt)
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -31,11 +35,19 @@ import jakarta.validation.Valid;
 public class MemberRestController {
 
 	private final MemberRepository memberRepository;
+	private final PasswordEncoder passwordEncoder;
 
-	public MemberRestController(MemberRepository memberRepository) {
+	
+
+	public MemberRestController(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
 		this.memberRepository = memberRepository;
+		this.passwordEncoder = passwordEncoder;
 	}
 
+	@GetMapping(path = "/secret")
+	public String displaySecret() {
+		return passwordEncoder.encode("secret");
+	}
 	@GetMapping
 	@JsonView(MemberViews.List.class)
 	public List<Member> findAll(@RequestParam Optional<String> q) throws MemberNotFoundException {
@@ -60,6 +72,11 @@ public class MemberRestController {
 	@PostMapping()
 	@JsonView(MemberViews.Detail.class)
 	public ResponseEntity<Member> create(@Valid @RequestBody Member member) {
+<<<<<<< HEAD
+=======
+
+		member.setPassword(passwordEncoder.encode(member.getPassword()));
+>>>>>>> aa6c6c0 (6.3 auth custom + BCrypt)
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(memberRepository.save(member));
 
