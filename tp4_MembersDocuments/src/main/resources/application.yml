@@ -11,9 +11,9 @@ spring:
       - prod
       
   datasource:
-    url: jdbc:postgresql://localhost:5434/f_members
+    url: jdbc:postgresql:f_members
     username: postgres
-    password: postgres
+    password: changeme
     
     hikari:
       minimum-idle: 2
