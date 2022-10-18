@@ -35,5 +35,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	public Member findByEmailAndPassword(String email, String password);
 
 	@Query("select m from Member m left join fetch m.documents where m.id= :id")
-	public Member fullLoad(@Param("id") Long id);
+	public Optional<Member> fullLoad(@Param("id") Long id);
 }

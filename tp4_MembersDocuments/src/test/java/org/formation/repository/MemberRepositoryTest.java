@@ -79,8 +79,8 @@ class MemberRepositoryTest {
 
 	@Test
 	void testingFullLoad() {
-		Member id1 = memberRepository.fullLoad(1l);
-		Member id2 = memberRepository.findById(1l).get();
+		Member id1 = memberRepository.fullLoad(1l).orElseThrow();
+		Member id2 = memberRepository.findById(1l).orElseThrow();
 		entityManager.close();
 
 		id1.getDocuments().stream().forEach(System.out::println);
