@@ -18,8 +18,9 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-import org.formation.controller.views.MemberViews;
+import org.formation.resource.MemberViews;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.Data;
@@ -41,7 +42,7 @@ public class Member {
 	private String email;
 	
 	@NotNull
-	@JsonView(MemberViews.List.class)
+	@JsonView(MemberViews.Insert.class)
 	private String password;
 	
 	@JsonView(MemberViews.List.class)
@@ -51,7 +52,7 @@ public class Member {
 	private int age;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@JsonView(MemberViews.List.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "'${app.dateFormat}'")
 	private Date registeredDate;
 	
 	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)

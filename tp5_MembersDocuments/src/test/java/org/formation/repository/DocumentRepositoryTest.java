@@ -1,5 +1,7 @@
 package org.formation.repository;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.List;
 
 import org.formation.model.Document;
@@ -27,7 +29,9 @@ class DocumentRepositoryTest {
 		
 		 List<Document> documents = documentRepository.findByOwner(id1);
 		
-		 documents.stream().forEach(System.out::println);	 	
+		 documents.stream().forEach(System.out::println);	
+		 
+		 assertEquals(3,documents.size());
 	}
 	
 	@Test
@@ -37,6 +41,8 @@ class DocumentRepositoryTest {
 		 List<Document> documents = documentRepository.findByOwnerName("THIBAU");
 		
 		 documents.stream().forEach(System.out::println);
+		 
+		 assertEquals(6,documents.size());
 		 	
 	}
 }

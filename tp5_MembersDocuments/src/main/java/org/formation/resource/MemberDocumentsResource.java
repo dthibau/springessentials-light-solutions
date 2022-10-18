@@ -1,7 +1,8 @@
-package org.formation.controller;
+package org.formation.resource;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
 import org.formation.model.Document;
@@ -13,18 +14,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/documents")
-public class DocumentRestController {
-
+@RequestMapping("/api/members/{id}/documents")
+public class MemberDocumentsResource {
 
 	private final MemberRepository memberRepository;
 	private final DocumentRepository documentRepository;
 
-	public DocumentRestController(DocumentRepository documentRepository, MemberRepository memberRepository) {
+	public MemberDocumentsResource(DocumentRepository documentRepository, MemberRepository memberRepository) {
 		this.documentRepository = documentRepository;
 		this.memberRepository = memberRepository;
 
@@ -33,28 +34,25 @@ public class DocumentRestController {
 	/**
 	 * @param owner
 	 * @return
-	 * @throws MemberNotFoundException 
+	 * @throws MemberNotFoundException
 	 */
-	@GetMapping("/owner/{id}/")
-	public List<Document> getDocuments(@PathVariable("id") Long id) throws MemberNotFoundException {
+	@GetMapping
+	public List<Document> getDocuments(@PathVariable("id") Long id) throws EntityNotFoundException {
 
-		Member member = memberRepository.findById(id).orElseThrow(
-				() -> new MemberNotFoundException("Id " + id));
+		Member member = memberRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Id " + id));
 
 		return documentRepository.findByOwner(member);
 
-		
 	}
-	
-	@PostMapping("/owner/{id}")
-	public ResponseEntity<Void> addDocument(@PathVariable("id") Long id, @Valid Document document) throws MemberNotFoundException {
-		Member member = memberRepository.findById(id).orElseThrow(
-				() -> new MemberNotFoundException("Id " + id));
-		
+
+	@PostMapping
+	public ResponseEntity<Void> addDocument(@PathVariable("id") Long id, @Valid @RequestBody Document document)
+			throws EntityNotFoundException {
+		Member member = memberRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Id " + id));
+
 		member.addDocument(document);
 		memberRepository.save(member);
 		return ResponseEntity.status(HttpStatus.ACCEPTED).build();
-		
-	}
 
+	}
 }

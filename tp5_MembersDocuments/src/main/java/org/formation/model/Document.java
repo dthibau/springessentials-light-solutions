@@ -10,8 +10,10 @@ import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.formation.controller.views.MemberViews;
+import org.formation.resource.MemberViews;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
@@ -30,13 +32,16 @@ public class Document implements Serializable {
 	private String name,contentType;
 	
 	@Column(name="doc_created")
+	@JsonView(MemberViews.Detail.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "'${app.dateFormat}'")
 	private Date dateCreation;
 	
 	@Lob
+	@JsonIgnore
 	private byte[] data;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@JsonView(MemberViews.Detail.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "'${app.dateFormat}'")
 	private Date uploadedDate;
 
 	public long getId() {
