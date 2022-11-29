@@ -1,0 +1,12 @@
+server:
+  port: 8083
+
+spring:
+  jpa:
+    show-sql: true
+    
+    open-in-view: false    
+    
+  kafka:
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer  
