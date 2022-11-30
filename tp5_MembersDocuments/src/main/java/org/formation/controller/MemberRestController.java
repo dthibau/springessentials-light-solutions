@@ -28,19 +28,13 @@ import com.fasterxml.jackson.annotation.JsonView;
 public class MemberRestController {
 
 	private final MemberRepository memberRepository;
-	private final PasswordEncoder passwordEncoder;
-
 	
 
-	public MemberRestController(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
+	public MemberRestController(MemberRepository memberRepository) {
 		this.memberRepository = memberRepository;
-		this.passwordEncoder = passwordEncoder;
 	}
 
-	@GetMapping(path = "/secret")
-	public String displaySecret() {
-		return passwordEncoder.encode("secret");
-	}
+
 	@GetMapping
 	@JsonView(MemberViews.List.class)
 	public List<Member> findAll() throws MemberNotFoundException {
@@ -67,7 +61,6 @@ public class MemberRestController {
 	@JsonView(MemberViews.Detail.class)
 	public ResponseEntity<Member> create(@Valid @RequestBody Member member) {
 
-		member.setPassword(passwordEncoder.encode(member.getPassword()));
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(memberRepository.save(member));
 

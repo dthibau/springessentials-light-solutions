@@ -2,7 +2,22 @@ spring:
   jpa:
     show-sql: false
     open-in-view: false    
-
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            token-uri: http://localhost:8089/auth/realms/MemberRealm/protocol/openid-connect/token
+            authorization-uri: http://localhost:8089/auth/realms/MemberRealm/protocol/openid-connect/auth
+            user-info-uri: http://localhost:8089/auth/realms/MemberRealm/protocol/openid-connect/userinfo
+            user-name-attribute: preferred_username
+        registration:
+          member-app:
+            provider: keycloak
+            client-id: member-app
+            client-secret: 4d67dc43-b26f-4124-b0bd-ac08af94f9ee
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
 logging:
   level:
     '[org.springframework.security]': debug    
