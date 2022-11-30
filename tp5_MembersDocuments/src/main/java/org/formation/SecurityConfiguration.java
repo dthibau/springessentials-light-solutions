@@ -26,7 +26,9 @@ public class SecurityConfiguration {
                 .requestMatchers("/api/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .oauth2Login();
+                .oauth2Login()
+                .and()
+                .oauth2ResourceServer(v -> v.jwt());
         return http.build();
     }
 
