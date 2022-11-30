@@ -4,6 +4,10 @@ spring:
     open-in-view: false    
   security:
     oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8089/auth/realms/MemberRealm
+          jwk-set-uri: http://localhost:8089/auth/realms/MemberRealm/protocol/openid-connect/certs
       client:
         provider:
           keycloak:
