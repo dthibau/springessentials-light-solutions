@@ -26,7 +26,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/api/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin();
+                .oauth2Login();
         return http.build();
     }
 

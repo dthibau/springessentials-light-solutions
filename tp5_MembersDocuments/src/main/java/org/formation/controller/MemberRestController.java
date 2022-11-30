@@ -35,19 +35,13 @@ import jakarta.validation.Valid;
 public class MemberRestController {
 
 	private final MemberRepository memberRepository;
-	private final PasswordEncoder passwordEncoder;
-
 	
 
-	public MemberRestController(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
+	public MemberRestController(MemberRepository memberRepository) {
 		this.memberRepository = memberRepository;
-		this.passwordEncoder = passwordEncoder;
 	}
 
-	@GetMapping(path = "/secret")
-	public String displaySecret() {
-		return passwordEncoder.encode("secret");
-	}
+
 	@GetMapping
 	@JsonView(MemberViews.List.class)
 	public List<Member> findAll(@RequestParam Optional<String> q) throws MemberNotFoundException {
@@ -75,8 +69,11 @@ public class MemberRestController {
 <<<<<<< HEAD
 =======
 
+<<<<<<< HEAD
 		member.setPassword(passwordEncoder.encode(member.getPassword()));
 >>>>>>> aa6c6c0 (6.3 auth custom + BCrypt)
+=======
+>>>>>>> 0f4b28d (OpenID Connect)
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(memberRepository.save(member));
 
