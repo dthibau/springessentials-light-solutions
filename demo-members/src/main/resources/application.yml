@@ -1,0 +1,54 @@
+spring:
+  jpa:
+    show-sql: true
+    open-in-view: false
+  security:
+    user:
+      password: secret
+
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            token-uri: http://localhost:8089/auth/realms/MemberRealm/protocol/openid-connect/token
+            authorization-uri: http://localhost:8089/auth/realms/MemberRealm/protocol/openid-connect/auth
+            user-info-uri: http://localhost:8089/auth/realms/MemberRealm/protocol/openid-connect/userinfo
+            user-name-attribute: preferred_username
+        registration:
+          member-app:
+            provider: keycloak
+            client-id: member-app
+            client-secret: 4d67dc43-b26f-4124-b0bd-ac08af94f9ee
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
+
+logging:
+  level:
+    '[org.springframework.security]': debug
+
+management:
+  endpoints: 
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health: 
+      show-details: always    
+---
+spring:
+  config:
+    activate:
+      on-profile:
+      - prod
+      
+  datasource:
+    url: jdbc:postgresql://localhost:5432/members-documents
+    username: postgres
+    password: postgres
+    hikari:
+      minimum-idle: 10
+      connection-timeout: 10000
+      maximum-pool-size: 50
+  jpa:
+    hibernate:
+      ddl-auto: validate
