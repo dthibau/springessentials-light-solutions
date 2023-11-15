@@ -18,8 +18,9 @@ class CustomerRepositoryTest {
     public void _playWithMongo() {
         customerRepository.deleteAll();
         // save a couple of customers
-        customerRepository.save(new Customer("Alice", "Smith"));
-        customerRepository.save(new Customer("Bob", "Smith"));
+        customerRepository.save(new Customer("Alice", "Smith")).block();
+        customerRepository.save(new Customer("Bob", "Smith")).block();
+        
         // fetch all customers
         System.out.println("Customers found with findAll():");
         System.out.println("-------------------------------");
