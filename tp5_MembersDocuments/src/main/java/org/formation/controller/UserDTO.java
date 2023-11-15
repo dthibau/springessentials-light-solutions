@@ -1,10 +1,9 @@
 package org.formation.controller;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
+
+import jakarta.validation.constraints.NotEmpty;
 
 public class UserDTO {
 

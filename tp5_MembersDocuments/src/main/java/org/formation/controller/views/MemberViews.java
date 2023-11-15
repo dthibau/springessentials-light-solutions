@@ -5,5 +5,7 @@ public static class SmallList {};
 	
 	public static class List{};
 	
+	public static class Creation extends List{}
+	
 	public static class Detail extends List{} 
 }

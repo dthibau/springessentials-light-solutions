@@ -2,8 +2,6 @@ package org.formation.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.formation.model.Document;
 import org.formation.model.DocumentRepository;
 import org.formation.model.Member;
@@ -16,8 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+
 @RestController
-@RequestMapping("/api/documents")
+@RequestMapping("/api/members/{id}/documents")
 public class DocumentRestController {
 
 
@@ -27,7 +27,6 @@ public class DocumentRestController {
 	public DocumentRestController(DocumentRepository documentRepository, MemberRepository memberRepository) {
 		this.documentRepository = documentRepository;
 		this.memberRepository = memberRepository;
-
 	}
 
 	/**
@@ -35,7 +34,7 @@ public class DocumentRestController {
 	 * @return
 	 * @throws MemberNotFoundException 
 	 */
-	@GetMapping("/owner/{id}/")
+	@GetMapping
 	public List<Document> getDocuments(@PathVariable("id") Long id) throws MemberNotFoundException {
 
 		Member member = memberRepository.findById(id).orElseThrow(
@@ -46,7 +45,7 @@ public class DocumentRestController {
 		
 	}
 	
-	@PostMapping("/owner/{id}")
+	@PostMapping
 	public ResponseEntity<Void> addDocument(@PathVariable("id") Long id, @Valid Document document) throws MemberNotFoundException {
 		Member member = memberRepository.findById(id).orElseThrow(
 				() -> new MemberNotFoundException("Id " + id));

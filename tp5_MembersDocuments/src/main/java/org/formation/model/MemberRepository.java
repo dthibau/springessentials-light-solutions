@@ -30,7 +30,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	 * @param partialPrenom
 	 * @return
 	 */
-	public List<Member> findByNomOrPrenomContainsIgnoreCase(String partialNom, String partialPrenom);
+	public List<Member> findByNomContainsOrPrenomContainsAllIgnoreCase(String partialNom, String partialPrenom);
 	/**
 	 * Return a Member via its email and password
 	 * 

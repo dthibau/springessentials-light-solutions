@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 
 import org.formation.model.Document;
@@ -19,6 +19,8 @@ import org.hibernate.LazyInitializationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import jakarta.persistence.EntityManager;
 
 @SpringBootTest
 class MemberRepositoryTest {
@@ -45,6 +47,17 @@ class MemberRepositoryTest {
 		Optional<Member> notFound = memberRepository.findByEmail("dthibau@WMmod.com");
 
 		assertTrue(!notFound.isPresent());
+	}
+	
+	@Test
+	void testQuickSearch() {
+	   List<Member> members = memberRepository.findByNomContainsOrPrenomContainsAllIgnoreCase("THI","THI");
+	   
+	   assertEquals(3,members.size());
+	   
+       members = memberRepository.findByNomContainsOrPrenomContainsAllIgnoreCase("GA","GA");
+       
+       assertEquals(1,members.size());
 	}
 
 	@Test

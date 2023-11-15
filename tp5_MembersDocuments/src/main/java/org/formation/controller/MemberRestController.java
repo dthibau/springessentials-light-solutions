@@ -1,14 +1,14 @@
 package org.formation.controller;
 
 import java.util.List;
-
-import javax.validation.Valid;
+import java.util.Optional;
 
 import org.formation.controller.views.MemberViews;
 import org.formation.model.Member;
 import org.formation.model.MemberRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/members")
 public class MemberRestController {
@@ -34,17 +36,15 @@ public class MemberRestController {
 
 	@GetMapping
 	@JsonView(MemberViews.List.class)
-	public List<Member> findAll() throws MemberNotFoundException {
-
-		return memberRepository.findAll();
+	public List<Member> findAll(@RequestParam Optional<String> q) throws MemberNotFoundException {
+	    
+	    if ( !q.isEmpty() ) {
+	        return memberRepository.findByNomContainsOrPrenomContainsAllIgnoreCase(q.get(),q.get());
+	    } else {
+	        return memberRepository.findAll();
+	    }
 	}
 	
-	@GetMapping("/search")
-	@JsonView(MemberViews.List.class)
-	public List<Member> search(@RequestParam String q) throws MemberNotFoundException {
-
-		return memberRepository.findByNomOrPrenomContainsIgnoreCase(q,q);
-	}
 
 	@GetMapping("/{id}")
 	@JsonView(MemberViews.Detail.class)
@@ -55,7 +55,8 @@ public class MemberRestController {
 	}
 		
 	@PostMapping()
-	public ResponseEntity<Member> create(@Valid Member member) {
+	@JsonView(MemberViews.Detail.class)
+	public ResponseEntity<Member> create(@Valid @RequestBody Member member) {
 
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(memberRepository.save(member));
@@ -63,6 +64,7 @@ public class MemberRestController {
 	}
 	
 	@PutMapping
+	@JsonView(MemberViews.Detail.class)
 	public ResponseEntity<Member> replace(@Valid Member member) throws MemberNotFoundException {
 		memberRepository.findById(member.getId()).orElseThrow(
 				() -> new MemberNotFoundException("Id " + member.getId()));
@@ -73,6 +75,7 @@ public class MemberRestController {
 	}
 	
 	@PatchMapping("/{id}")
+	@JsonView(MemberViews.Detail.class)
 	public ResponseEntity<Member> patch(@PathVariable long id, @RequestBody Member member) throws MemberNotFoundException {
 
 		Member originalMember = memberRepository.findById(id).orElseThrow(
