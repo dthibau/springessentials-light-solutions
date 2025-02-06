@@ -6,11 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 
+import jakarta.persistence.EntityManager;
 import org.formation.model.Document;
 import org.formation.model.DocumentRepository;
 import org.formation.model.Member;
@@ -18,9 +19,10 @@ import org.formation.model.MemberRepository;
 import org.hibernate.LazyInitializationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+@DataJpaTest
 class MemberRepositoryTest {
 
 	@Autowired
@@ -34,6 +36,19 @@ class MemberRepositoryTest {
 
 	@Autowired
 	DataSource dataSource;
+
+	@Test
+	void testByFirstOrLastName() {
+
+		List<Member> result = memberRepository.findByNomContainsOrPrenomContainsAllIgnoreCase("da","da");
+
+		assertEquals(1,result.size());
+
+		result = memberRepository.findByNomContainsOrPrenomContainsAllIgnoreCase("t","t");
+
+		assertEquals(6,result.size());
+	}
+
 
 	@Test
 	void testByEmailNotIgnoringCase() {

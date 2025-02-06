@@ -23,7 +23,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	 * @param partialName Any alphabetic string.
 	 * @return The list of matching Members - always non-null, but may be empty.
 	 */
-	public List<Member> findByNomContainsIgnoreCase(String partialNom);
+	public List<Member> findByNomContainsOrPrenomContainsAllIgnoreCase(String partialNom, String partialPrenom);
 
 	/**
 	 * Return a Member via its email and password
@@ -32,7 +32,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	 * @param password
 	 * @return
 	 */
-	public Member findByEmailAndPassword(String email, String password);
+	public Optional<Member> findByEmailAndPassword(String email, String password);
 
 	@Query("select m from Member m left join fetch m.documents where m.id= :id")
 	public Member fullLoad(@Param("id") Long id);
