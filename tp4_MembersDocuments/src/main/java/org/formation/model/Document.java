@@ -1,12 +1,15 @@
 package org.formation.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
+import org.formation.controller.MemberViews;
 
 import java.io.Serializable;
 import java.util.Date;
 
 
 @Entity
+@JsonView(MemberViews.Detail.class)
 public class Document implements Serializable {
 
 	/**

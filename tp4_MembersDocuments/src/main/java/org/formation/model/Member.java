@@ -1,14 +1,15 @@
 package org.formation.model;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
+import org.formation.controller.MemberViews;
 
 
 @Entity
@@ -17,24 +18,30 @@ import lombok.Data;
 public class Member {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView(MemberViews.List.class)
 	private long id;
 	
 	
 	@Column(unique=true)
+	@JsonView(MemberViews.List.class)
 	private String email;
 	
 	@NotNull
 	private String password;
-	
+
+	@JsonView(MemberViews.List.class)
 	private String nom,prenom;
-	
+
+	@JsonView(MemberViews.List.class)
 	private int age;
 	
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date registeredDate;
 	
 	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
-	private Set<Document> documents = new HashSet<Document>();
+	@JsonView(MemberViews.Detail.class)
+	private List<Document> documents = new ArrayList<>();
 
 	
 	public void addDocument(Document document) {
