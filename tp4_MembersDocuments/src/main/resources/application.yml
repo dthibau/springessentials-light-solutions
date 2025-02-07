@@ -2,7 +2,20 @@ spring:
   jpa:
     show-sql: true
     open-in-view: false
-
+  security:
+    user:
+      password: secret
+logging:
+  level:
+    org.springframework.security: DEBUG
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
 --- 
 spring:
   config:
